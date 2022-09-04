@@ -40,5 +40,5 @@ func CollectModules(root string) ([]Module, error) {
 		return []Module{}, err
 	}
 
-	return results, err
+	return results, nil
 }
