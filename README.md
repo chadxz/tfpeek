@@ -11,3 +11,8 @@ include:
 ```
 ❯ tfpeek <monorepo_root>
 ```
+
+## wish list
+
+- support for `.tfpeekignore` to ignore directories adjacent to or below that 
+  file
