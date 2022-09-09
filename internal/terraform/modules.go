@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"io/fs"
 	"path/filepath"
+	"strings"
 
 	"github.com/hashicorp/terraform-config-inspect/tfconfig"
 )
 
 type Module struct {
-	_m *tfconfig.Module
+	M *tfconfig.Module
 }
 
 // CollectModules returns all valid Terraform modules recursively found in the
@@ -22,6 +23,10 @@ func CollectModules(root string) ([]Module, error) {
 			return fs.SkipDir
 		}
 
+		if strings.Contains(path, ".terraform") {
+			return fs.SkipDir
+		}
+
 		if d.IsDir() && tfconfig.IsModuleDir(path) {
 			module, diags := tfconfig.LoadModule(path)
 
@@ -30,7 +35,7 @@ func CollectModules(root string) ([]Module, error) {
 				return fs.SkipDir
 			}
 
-			results = append(results, Module{_m: module})
+			results = append(results, Module{M: module})
 		}
 
 		return nil
