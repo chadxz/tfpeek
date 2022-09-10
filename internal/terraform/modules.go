@@ -20,6 +20,7 @@ func CollectModules(root string) ([]Module, error) {
 
 	err := filepath.WalkDir(root, func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
+			fmt.Printf("Warning: cannot traverse path '%s': %v\n", path, err)
 			return fs.SkipDir
 		}
 
@@ -42,7 +43,7 @@ func CollectModules(root string) ([]Module, error) {
 	})
 
 	if err != nil {
-		return []Module{}, err
+		return nil, err
 	}
 
 	return results, nil
